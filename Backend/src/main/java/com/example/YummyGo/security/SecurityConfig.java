@@ -1,5 +1,6 @@
 package com.example.YummyGo.security;
 
+<<<<<<< Updated upstream
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,4 +25,7 @@ public class SecurityConfig {
 
         return http.build();
     }
+=======
+public class SecurityConfig {
+>>>>>>> Stashed changes
 }
