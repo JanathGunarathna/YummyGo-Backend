@@ -1,4 +1,4 @@
-package com.example.YummyGo.request;
+package com.example.YummyGo.io;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,5 +11,5 @@ public class FoodRequest {
     private String name;
     private String description;
     private double price;
-    private String category;
+    private String category ;
 }

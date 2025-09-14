@@ -1,6 +1,9 @@
 package com.example.YummyGo.service;
 
-//import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.example.YummyGo.entity.FoodEntity;
+import com.example.YummyGo.io.FoodRequest;
+import com.example.YummyGo.io.FoodResponse;
+import com.example.YummyGo.repository.FoodRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -22,6 +25,7 @@ import java.util.function.Consumer;
 public class FoodServiceImpl implements FoodService {
 
     private final S3Client s3Client;
+    private FoodRepository foodRepository;
 
     @Value("$[aws.s3.bucketname]")
     private String bucketName;
@@ -47,5 +51,33 @@ public class FoodServiceImpl implements FoodService {
         }catch(IOException ex){
             throw  new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,"An error occured while loading the file");
         }
+    }
+
+    @Override
+    public FoodResponse addFood(FoodRequest request, MultipartFile file) {
+        FoodEntity newFoodEntity = convertToEntity(request);
+        String imageUrl = uploadfile(file);
+        newFoodEntity.setImageUrl(imageUrl);
+        newFoodEntity = foodRepository.save(newFoodEntity);
+        return convertToResponse(newFoodEntity);
+    }
+
+    private FoodEntity convertToEntity (FoodRequest request){
+        return FoodEntity.builder()
+                .name(request.getName())
+                .description(request.getDescription())
+                .category(request.getCategory())
+                .price(request.getPrice())
+                .build();
+    }
+    private FoodResponse convertToResponse(FoodEntity entity){
+        return FoodResponse.builder()
+                .id(entity.getId())
+                .name((entity.getName()))
+                .description(entity.getDescription())
+                .category(entity.getCategory())
+                .price(entity.getPrice())
+                .imageUrl(entity.getImageUrl())
+                .build();
     }
 }
