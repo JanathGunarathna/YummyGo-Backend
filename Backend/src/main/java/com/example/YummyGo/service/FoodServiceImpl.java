@@ -5,6 +5,7 @@ import com.example.YummyGo.io.FoodRequest;
 import com.example.YummyGo.io.FoodResponse;
 import com.example.YummyGo.repository.FoodRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,17 +18,20 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 
 import java.io.IOException;
+import java.util.List;
 import java.util.UUID;
-import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
 public class FoodServiceImpl implements FoodService {
 
-    private final S3Client s3Client;
+    @Autowired
+    private  S3Client s3Client;
+
+    @Autowired
     private FoodRepository foodRepository;
 
-    @Value("$[aws.s3.bucketname]")
+    @Value("${aws.s3.bucketname}")
     private String bucketName;
 
     @Override
@@ -60,6 +64,12 @@ public class FoodServiceImpl implements FoodService {
         newFoodEntity.setImageUrl(imageUrl);
         newFoodEntity = foodRepository.save(newFoodEntity);
         return convertToResponse(newFoodEntity);
+    }
+
+    @Override
+    public List<FoodResponse> readFoods() {
+        List<FoodEntity>databaseEntries= foodRepository.findAll();
+        return databaseEntries.stream().map(object->convertToResponse(object)).collect(Collectors.toList());
     }
 
     private FoodEntity convertToEntity (FoodRequest request){
