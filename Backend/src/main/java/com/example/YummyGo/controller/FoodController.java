@@ -1,5 +1,6 @@
 package com.example.YummyGo.controller;
 
+<<<<<<< HEAD
 import com.example.YummyGo.io.FoodRequest;
 import com.example.YummyGo.io.FoodResponse;
 import com.example.YummyGo.service.FoodService;
@@ -15,11 +16,19 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+=======
+import com.example.YummyGo.io.FoodResponse;
+import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.bind.annotation.RestController;
+>>>>>>> 3cb16ae9d963da13d2ec0f692b864f733d5b7ec4
 
 @RestController
 @RequestMapping("/api/foods")
 @AllArgsConstructor
 public class FoodController {
+<<<<<<< HEAD
 
     private final FoodService foodService;
 
@@ -39,5 +48,9 @@ public class FoodController {
     @GetMapping
     public List<FoodResponse> readFoods(){
          return foodService.readFoods();
+=======
+    public FoodResponse addFood(@RequestPart("food")){
+
+>>>>>>> 3cb16ae9d963da13d2ec0f692b864f733d5b7ec4
     }
 }
