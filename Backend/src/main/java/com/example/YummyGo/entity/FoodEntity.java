@@ -11,11 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-<<<<<<< HEAD
 @Document(collection = "foods")
-=======
-@Document(collation = "food")
->>>>>>> 3cb16ae9d963da13d2ec0f692b864f733d5b7ec4
 public class FoodEntity {
     @Id
     private String id;
