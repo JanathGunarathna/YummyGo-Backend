@@ -1,4 +1,4 @@
-package com.YummyGo.YummyGo;
+package com.example.YummyGo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
